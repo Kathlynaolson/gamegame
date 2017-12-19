@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour {
 
     private Rigidbody2D rb;
     private Vector2 movement;
-    
+
     private Vector3 mousePos;
     private Vector3 objPos;
 
@@ -17,15 +17,15 @@ public class PlayerScript : MonoBehaviour {
 
     private void Start()
     {
-        
+
         weapon = GetComponent<WeaponScript>();
-        
+
     }
 
-    void Update ()
+    void Update()
     {
 
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         //if (Input.touches[0].phase == TouchPhase.Began
         //    || Input.touches[0].phase == TouchPhase.Moved)
         {
@@ -35,18 +35,14 @@ public class PlayerScript : MonoBehaviour {
             mousePos.x = mousePos.x - objPos.x;
             mousePos.y = mousePos.y - objPos.y;
 
-            angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg + 90;
+            angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg - 90;
 
             rotation = new Vector3(0, 0, angle);
             transform.rotation = Quaternion.Euler(rotation);
 
+            weapon.Attack(false);
             
         }
 
-        if (Input.GetMouseButtonUp(0))
-        //if (Input.touches[0].phase == TouchPhase.Ended)
-        {
-            weapon.Attack(false);
-        }
     }
 }

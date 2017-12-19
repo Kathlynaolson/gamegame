@@ -43,8 +43,8 @@ public class WeaponScript : MonoBehaviour
             Vector2 mousePos = Input.mousePosition;
             
             Vector2 objPos = Camera.main.WorldToScreenPoint(transform.position);
-            mousePos.x = -(mousePos.x - objPos.x);
-            mousePos.y = -(mousePos.y - objPos.y);
+            mousePos.x = (mousePos.x - objPos.x);
+            mousePos.y = (mousePos.y - objPos.y);
 
             float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
             Vector3 rotation = new Vector3(0, 0, angle);
