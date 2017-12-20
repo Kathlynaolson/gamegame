@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour {
 
     private AudioSource song;
 
-    public float spawnTime;
+    public float spawnInvokeBetweenTime;
     public float spawnStartTime = 5;
     public float spawnForTime = 15;
     public Transform spawnPoint1;
@@ -24,18 +24,7 @@ public class AudioManager : MonoBehaviour {
         song = GetComponent<AudioSource>();
 
         spawnForTime += spawnStartTime;
-        InvokeRepeating("Spawn", spawnStartTime, spawnTime);
-
-        //song.Play();
-        /*
-                float[] samples = song.GetOutputData()
-                song.clip.GetData(samples, 0);
-                for (int i = 0; i > samples.Length; i++)
-                {
-                    samples[i] = samples[i] * 0.5f;
-                }
-
-                song.clip.SetData(samples, 0); */
+        InvokeRepeating("Spawn", spawnStartTime, spawnInvokeBetweenTime);
     }
 	
 	// Update is called once per frame
@@ -43,17 +32,15 @@ public class AudioManager : MonoBehaviour {
     {
         enemyRate = 0;
 
+        float[] samples = new float[256];
         float[] spectrum = new float[512];
 
-        song.GetOutputData(spectrum, 0);
+        song.GetOutputData(samples, 0);
+        song.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
 
-        for (int i = 1; i < spectrum.Length - 1; i++)
+        for (int i = 1; i < samples.Length - 1; i++)
         {
-            //Debug.DrawLine(new Vector3(i - 1, 0, spectrum[i] + 10), new Vector3(i, 0, spectrum[i + 1] + 10), Color.red);
-            //Debug.DrawLine(new Vector3(i - 1, 0, Mathf.Log(spectrum[i - 1] + 10)), new Vector3(i, 0, Mathf.Log(spectrum[i]) + 10), Color.cyan);
-            //Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
-            //Debug.DrawLine(new Vector3(Mathf.Log(i - 1), 0, Mathf.Log(spectrum[i - 1])), new Vector3(Mathf.Log(i), 0, Mathf.Log(spectrum[i])), Color.blue);
-            enemyRate += spectrum[i];
+            enemyRate += samples[i];
         }
 
         spawnForTime -= Time.deltaTime;
@@ -61,11 +48,11 @@ public class AudioManager : MonoBehaviour {
 
     public void Spawn()
     {
-        if (spawnForTime >= 0)
+        /*if (spawnForTime >= 0)
         {
             Instantiate(enemy1, spawnPoint1.position, spawnPoint1.rotation);
             Instantiate(enemy2, spawnPoint2.position, spawnPoint2.rotation);
-        }
+        }*/
 
         if (enemyRate > 2)
         {
@@ -74,12 +61,10 @@ public class AudioManager : MonoBehaviour {
 
         if (enemyRate > 1)
         {
-            Instantiate(enemy1, new Vector3(spawnPoint1.position.x, spawnPoint1.position.y, 0), spawnPoint1.rotation);
+            Instantiate(enemy1, spawnPoint1.position, spawnPoint1.rotation);
+            Instantiate(enemy2, spawnPoint2.position, spawnPoint2.rotation);
+            Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 0.5f, spawnPoint1.position.y, 0), spawnPoint1.rotation);
+            Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 0.5f, spawnPoint2.position.y, 0), spawnPoint2.rotation);
         }
-
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
     }
 }
