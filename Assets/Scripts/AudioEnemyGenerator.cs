@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour {
-
-    private AudioSource song;
+public class AudioEnemyGenerator : MonoBehaviour {
 
     public float spawnInvokeBetweenTime;
     public float spawnStartTime = 5;
     public float spawnForTime = 15;
+
     public Transform spawnPoint1;
     public Transform spawnPoint2;
     public Transform spawnPoint3;
@@ -21,8 +20,6 @@ public class AudioManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        song = GetComponent<AudioSource>();
-
         spawnForTime += spawnStartTime;
         InvokeRepeating("Spawn", spawnStartTime, spawnInvokeBetweenTime);
     }
@@ -32,17 +29,12 @@ public class AudioManager : MonoBehaviour {
     {
         enemyRate = 0;
 
-        float[] samples = new float[256];
-        float[] spectrum = new float[512];
-
-        song.GetOutputData(samples, 0);
-        song.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
-
-        for (int i = 1; i < samples.Length - 1; i++)
+        for (int i = 1; i < 8; i++)
         {
-            enemyRate += samples[i];
+            enemyRate += AudioHelper.freqBands[i];
         }
 
+        enemyRate /= 8;
         spawnForTime -= Time.deltaTime;
     }
 
@@ -65,6 +57,9 @@ public class AudioManager : MonoBehaviour {
             Instantiate(enemy2, spawnPoint2.position, spawnPoint2.rotation);
             Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 0.5f, spawnPoint1.position.y, 0), spawnPoint1.rotation);
             Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 0.5f, spawnPoint2.position.y, 0), spawnPoint2.rotation);
+            Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 1f, spawnPoint1.position.y, 0), spawnPoint1.rotation);
+            Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 1f, spawnPoint2.position.y, 0), spawnPoint2.rotation);
+
         }
     }
 }
