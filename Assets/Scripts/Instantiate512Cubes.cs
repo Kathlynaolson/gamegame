@@ -35,7 +35,6 @@ public class Instantiate512Cubes : MonoBehaviour {
             arrSampleCube[i] = instanceSampleCube;
             
         }
-
         
     }
 

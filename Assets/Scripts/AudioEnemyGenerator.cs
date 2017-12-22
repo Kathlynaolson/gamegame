@@ -55,10 +55,10 @@ public class AudioEnemyGenerator : MonoBehaviour {
         {
             Instantiate(enemy1, spawnPoint1.position, spawnPoint1.rotation);
             Instantiate(enemy2, spawnPoint2.position, spawnPoint2.rotation);
-            Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 0.5f, spawnPoint1.position.y, 0), spawnPoint1.rotation);
-            Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 0.5f, spawnPoint2.position.y, 0), spawnPoint2.rotation);
-            Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 1f, spawnPoint1.position.y, 0), spawnPoint1.rotation);
-            Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 1f, spawnPoint2.position.y, 0), spawnPoint2.rotation);
+            Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 0.5f, spawnPoint1.position.y + 1f, 0), spawnPoint1.rotation);
+            Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 0.5f, spawnPoint2.position.y - 1f, 0), spawnPoint2.rotation);
+            Instantiate(enemy1, new Vector3(spawnPoint1.position.x + 1f, spawnPoint1.position.y + 1f, 0), spawnPoint1.rotation);
+            Instantiate(enemy2, new Vector3(spawnPoint2.position.x + 1f, spawnPoint2.position.y - 1f, 0), spawnPoint2.rotation);
 
         }
     }

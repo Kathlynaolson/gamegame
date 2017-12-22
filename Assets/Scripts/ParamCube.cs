@@ -6,6 +6,7 @@ public class ParamCube : MonoBehaviour {
 
     public int band;
     private float scaleMultiplier;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -18,5 +19,6 @@ public class ParamCube : MonoBehaviour {
                          transform.localScale.x,
                          AudioHelper.freqBands[band] * scaleMultiplier, 
                          transform.localScale.z);
+
 	}
 }
