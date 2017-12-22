@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ParticlePractice : MonoBehaviour {
 
-    private int rotate = 1;
-
     private float xSeparation = 0;
     private GameObject[] arrParticleSystems;
     public GameObject sampleParticleSystem;
@@ -30,8 +28,9 @@ public class ParticlePractice : MonoBehaviour {
             xSeparation += 8f / 32;
 
             arrParticleSystems[i] = instanceParticleSystem;
-
         }
+
+        transform.Rotate(new Vector3(0, 0, 90));
     }
 	
 	// Update is called once per frame
